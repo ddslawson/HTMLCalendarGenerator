@@ -19,11 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="HTMLCalendarGenerator.cpp" />
+    <ClCompile Include="HTMLCalendar.cpp" />
+    <ClCompile Include="HTMLDay.cpp" />
+    <ClCompile Include="HTMLMonth.cpp" />
+    <ClCompile Include="HTMLYear.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="HTMLCalendarGenerator.h" />
+    <ClInclude Include="HTMLCalendar.h" />
+    <ClInclude Include="HTMLDay.h" />
+    <ClInclude Include="HTMLMonth.h" />
+    <ClInclude Include="HTMLYear.h" />
+    <ClInclude Include="IHTMLCalendarComponent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "HTMLCalendarGenerator.h"
+#include "HTMLCalendar.h"
 
 // HTML Calendar Generator - Genrates a 3 year gregorian calendar centered on the provided year.
 // Expected usage is ./HTMLCalendarGenerator <year> <output calendar name>
@@ -31,9 +31,9 @@ int main(int argc, char* argv[])
 		year = 1583;
 	}
 	// Create html genertor object
-	HTMLCalendarGenerator calendarGen(htmlName, year);
-	// Populate calendar
-	calendarGen.PopulateCalendar();
+	HTMLCalendar calendar(htmlName, year);
+	// Write calendar
+	calendar.WriteHTML();
 
 	return 0;
 }
