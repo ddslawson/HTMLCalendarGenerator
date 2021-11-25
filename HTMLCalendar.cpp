@@ -34,16 +34,16 @@ string HTMLCalendar::GetHTML()
 	stringstream htmlStream;
 
 	// Create tasks for generating each year asynchronously
-	std::map<int, std::packaged_task<string(int)>> htmlYearTasks;
+	std::map<int, std::future<string>> htmlYearTasks;
 
+	std::function<string(const int)> getYear = [](const int selectedYear) {
+		HTMLYear htmlYear(selectedYear);
+		return htmlYear.GetHTML();;
+	};
 	// Populate and initiate tasks
 	for (int year : years)
 	{
-		htmlYearTasks.emplace(year, [](const int selectedYear) {
-			HTMLYear htmlYear(selectedYear);
-			return htmlYear.GetHTML();;
-			});
-		htmlYearTasks.at(year)(year);
+		htmlYearTasks.emplace(year, std::async(std::launch::async, getYear, year));
 	}
 
 	// Populate start of html file
@@ -57,7 +57,7 @@ string HTMLCalendar::GetHTML()
 	for (auto year : years)
 	{
 		htmlStream << "<td>\n"
-			<< htmlYearTasks.at(year).get_future().get()
+			<< htmlYearTasks.at(year).get()
 			<< "</td>\n";
 	}
 
