@@ -33,16 +33,20 @@ string HTMLCalendar::GetHTML()
 	std::cout << "Generating Calendar" << std::endl;
 	stringstream htmlStream;
 
-	// Create tasks for generating each year asynchronously
+	// Create store for futures for generating each year asynchronously
 	std::map<int, std::future<string>> htmlYearTasks;
 
+	// Wrap up steps for getting a year in HTML in lambda
 	std::function<string(const int)> getYear = [](const int selectedYear) {
 		HTMLYear htmlYear(selectedYear);
 		return htmlYear.GetHTML();;
 	};
-	// Populate and initiate tasks
+
+	// Populate and initiate async tasks
 	for (int year : years)
 	{
+		// The future returned by async is stored against the correct year
+		// NOTE: The returned future must be stored to avoid internal ~future() being called which is blocking
 		htmlYearTasks.emplace(year, std::async(std::launch::async, getYear, year));
 	}
 
